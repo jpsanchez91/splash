@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+<title>DeliveryNet</title>
+
+<!-- CSS  -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="css/materialize.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+<link href="css/style.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+</head>
+<body>
+	<nav class="red" role="navigation">
+		<div class="nav-wrapper container">
+			<a id="logo-container" href="#" class="brand-logo">DeliveryNet</a>
+
+		</div>
+	</nav>
+
+	<div id="index-banner" class="parallax-container">
+		<div class="section no-pad-bot">
+			<div class="container">
+				<br>
+				<br>
+				<h1 class="header center teal-text text-lighten-2">DeliveryNet</h1>
+				<div class="row center">
+					<h5 class="header col s12 light">Peça sua refeição favorita
+						sem sair de casa</h5>
+				</div>
+				<br>
+				<br>
+
+			</div>
+		</div>
+		<div class="parallax">
+			<img src="background1.jpg" alt="Unsplashed background img 1">
+		</div>
+	</div>
+
+
+	<div class="container">
+		<div class="section">
+
+			<!--   Icon Section   -->
+			<div class="row">
+				<div class="col s12 m4">
+					<div class="icon-block">
+						<h2 class="center brown-text">
+							<i class="material-icons">flash_on</i>
+						</h2>
+						<h5 class="center">Velocidade</h5>
+
+						<p class="light">Peça sua comida em poucos clicks e receba na
+							porta da sua casa</p>
+					</div>
+				</div>
+
+				<div class="col s12 m4">
+					<div class="icon-block">
+						<h2 class="center brown-text">
+							<i class="material-icons">add_shopping_cart</i>
+						</h2>
+						<h5 class="center">Praticidade</h5>
+
+						<p class="light">Escolha entre os melhores restaurantes da
+							região e tenho o que deseja comer</p>
+					</div>
+				</div>
+
+				<div class="col s12 m4">
+					<div class="icon-block">
+						<h2 class="center brown-text">
+							<i class="material-icons">credit_card</i>
+						</h2>
+						<h5 class="center">Economia</h5>
+
+						<p class="light">Escolha entres os restaurantes e compare
+							preços</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="parallax-container valign-wrapper">
+		<div class="section no-pad-bot">
+			<div class="container">
+				<div class="row center">
+					<h5 class="header col s12 light">Um novo jeito de comer</h5>
+				</div>
+			</div>
+		</div>
+		<div class="parallax">
+			<img src="background2.jpg" alt="Unsplashed background img 2">
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="section">
+
+			<div class="row">
+				<div class="col s12 center" id ="resposta">
+					<h3>
+						<i class="mdi-content-send brown-text"></i>
+					</h3>
+					<h4>Seja uns dos primeiros a usar! Deixe seu nome e email
+						abaixo</h4>
+					<div class="row" id="forms">
+						<form class="col s12">
+							<div class="row">
+								<div class="input-field col s5">
+									<i class="material-icons prefix">account_circle</i> <input
+										id="nome" type="text" class="validate"> <label
+										for="nome">Nome</label>
+								</div>
+								<div class="input-field col s5">
+									<i class="material-icons prefix">email</i> <input id="email"
+										type="email" class="validate"> <label for="email">Email</label>
+								</div>
+								<div class="col s2">
+									<a class="btn-floating btn-large waves-effect waves-light red"
+										onClick="adiciona();"><i class="material-icons">send</i></a>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="preloader-wrapper big active" id="loader"
+						style="display: none">
+						<div class="spinner-layer spinner-blue-only">
+							<div class="circle-clipper left">
+								<div class="circle"></div>
+							</div>
+							<div class="gap-patch">
+								<div class="circle"></div>
+							</div>
+							<div class="circle-clipper right">
+								<div class="circle"></div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="parallax-container valign-wrapper">
+		<div class="section no-pad-bot">
+			<div class="container"></div>
+		</div>
+		<div class="parallax">
+			<img src="background3.jpg" alt="Unsplashed background img 3">
+		</div>
+	</div>
+
+	<footer class="page-footer red">
+
+		<div class="footer-copyright">
+			<div class="container">Feito por João Paulo Sanchez para o
+				teste da geofusion</div>
+		</div>
+	</footer>
+
+
+	<!--  Scripts-->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/materialize.js"></script>
+	<script src="js/init.js"></script>
+	<script>
+    function adiciona(){
+    	if(!isEmail($("#email").val())){
+    		Materialize.toast('Por Favor digite um email valido', 4000)
+    		return;
+    	}
+    	if($("#nome").val() == ""){
+    		Materialize.toast('Por Favor digite um nome valido', 4000)
+    		return;
+    	}
+    	
+	    $("#forms").hide();
+		$("#loader").show();
+	    var EmailEntity = {
+		  Nome : $("#nome").val(),
+		  Email : $("#email").val()
+		}
+
+	    $.ajax({
+            url: '/email',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(EmailEntity),
+            success: function (data) {
+                $("#loader").hide();
+				$("#forms").show();
+				$("#resposta").html("<h4>Obrigado! Deixaremos você informado sobre o lançamento do DeliveryNet</h4>");
+				
+            }
+            
+        });
+	    
+	    $.ajax({
+            url: '/sendEmail',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(EmailEntity),
+            success: function (data) {
+               null;
+            }
+            
+        });
+	
+	}
+    
+    function isEmail(email) {
+    	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    	  return regex.test(email);
+    	}
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+<title>DeliveryNet</title>
+
+<!-- CSS  -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="css/materialize.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+<link href="css/style.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+</head>
+<style>
+.center-btn {
+	text-align: center
+}
+</style>
+<body>
+	<nav class="red" role="navigation">
+		<div class="nav-wrapper container">
+			<a href="#" class="brand-logo" id="textoNome">DeliveryNet</a>
+
+		</div>
+	</nav>
+	<div id="corpo">
+		<br>
+		<h5 class="center">Muito Obrigado por se inscrever no
+			DeliveryNet, por favor nos ajude a se adaptar melhor para você ,
+			responda apenas essas 3 perguntas :</h5>
+		<div class="row">
+			<form class="col s12">
+				<p class="center">1) O que você espera do DeliveryNet?
+				<p>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="p1" type="text" class="validate">
+
+					</div>
+				</div>
+				<p class="center">2) Quanto voce pagaria no DeliveryNet?
+				<p>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="p2" type="text" class="validate">
+
+					</div>
+				</div>
+				<p class="center">3) O que você realmente precisa no
+					DeliveryNet?
+				<p>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="p3" type="text" class="validate">
+
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="center-btn">
+			<a class="waves-effect waves-light btn red" onClick="adiciona()"><i
+				class="material-icons right">send</i>Enviar</a>
+		</div>
+		<br> <br>
+	</div>
+	<div class="preloader-wrapper big active" id="loader"
+		style="display: none">
+		<div class="spinner-layer spinner-blue-only">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div>
+			<div class="gap-patch">
+				<div class="circle"></div>
+			</div>
+			<div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+	<footer class="page-footer red">
+
+		<div class="footer-copyright">
+			<div class="container">Feito por João Paulo Sanchez para o
+				teste da geofusion</div>
+		</div>
+	</footer>
+
+
+	<!--  Scripts-->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/materialize.js"></script>
+	<script src="js/init.js"></script>
+	<script>
+	function getUrlVars()
+	{
+	    var vars = [], hash;
+	    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	    for(var i = 0; i < hashes.length; i++)
+	    {
+	        hash = hashes[i].split('=');
+	        vars.push(hash[0]);
+	        vars[hash[0]] = hash[1];
+	    }
+	    return vars;
+	}
+	
+	console.log(getUrlVars())
+	$("#textoNome").html("Ola " + getUrlVars()["nome"] + " , Bem vindo(a)")
+	
+	
+	 function adiciona(){
+		if($("#p1").val() == ""){
+    		Materialize.toast('Por Favor responda a pergunta 1', 4000)
+    		return;
+    	}
+		if($("#p2").val() == ""){
+			Materialize.toast('Por Favor responda a pergunta 2', 4000)
+    		return;
+    	}
+		if($("#p3").val() == ""){
+			Materialize.toast('Por Favor responda a pergunta 3', 4000)
+    		return;
+    	}
+	    $("#corpo").hide();
+		$("#loader").show();
+	    var EmailEntity = {
+		  Nome : getUrlVars()["nome"],
+		  Email : getUrlVars()["email"],
+		  p1 : $("#p1").val(),
+		  p2 : $("#p2").val(),
+		  p3 : $("#p3").val()
+		}
+
+	    $.ajax({
+            url: '/resposta',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(EmailEntity),
+            success: function (data) {
+                $("#loader").hide();
+				$("#corpo").show();
+				$("#corpo").html("<h4>Obrigado! Deixaremos você informado sobre o lançamento do DeliveryNet</h4>");
+				
+            }
+            
+        });
+	}
+	
+	
+	</script>
+</body>
+</html>
